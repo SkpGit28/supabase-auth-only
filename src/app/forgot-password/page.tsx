@@ -2,6 +2,16 @@
 
 import { useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
@@ -22,21 +32,39 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div>
-      <h2>Forgot Password</h2>
-      <form onSubmit={handleForgotPassword}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit">Send reset link</button>
-      </form>
-      {message && <p>{message}</p>}
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <Card className="w-full max-w-md mx-4">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl">Forgot Password</CardTitle>
+          <CardDescription>
+            Enter your email to receive a password reset link.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleForgotPassword} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="email@example.com"
+              />
+            </div>
+            <Button type="submit" className="w-full">
+              Send Reset Link
+            </Button>
+          </form>
+          {message && (
+            <p className="mt-4 text-center text-sm text-muted-foreground">
+              {message}
+            </p>
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }
